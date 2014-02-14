@@ -54,17 +54,21 @@ def deploy_configurations():
 
     print()
 
-    configs= []
+    configs = []
     sections = configurations_parser.sections()
     for section in sections:
         for option, cfg in configurations_parser.items(section):
             config_file_name = option
             destination_path = os.path.join(expanduser(section), cfg)
             configs.append(Configuration(depot, config_file_name, destination_path))
-            print(option, os.path.join(expanduser(section), cfg))
+
+    for c in configs:
+        c.deploy()
+        print(str(c.__dict__))
 
     print()
     print()
+
 
 if __name__ == "__main__":
     print(info)
