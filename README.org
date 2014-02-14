@@ -1,0 +1,6 @@
+* Super-User-Stone
+The configurations deployer that turns any computer into your computer.
+
+** TODO How to use
+** TODO How to configure
+** TODO FAQ
