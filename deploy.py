@@ -21,11 +21,15 @@ parser.add_argument('-i', '--input',
                     dest='depot',
                     required=True,
                     help='configuration depot')
+parser.add_argument('--dry',
+                    dest='dry',
+                    action='store_true',
+                    help='don\'t actually do anything, just show what would happen.')
 parser.add_argument('--copy',
                     dest='copy',
                     action='store_true',
                     help='copy configurations instead of linking them')
-parser.set_defaults(copy=False)
+parser.set_defaults(dry=False, copy=False)
 args = parser.parse_args()
 
 depot = os.path.abspath(expanduser(args.depot))
@@ -63,8 +67,7 @@ def deploy_configurations():
             configs.append(Configuration(depot, config_file_name, destination_path))
 
     for c in configs:
-        c.deploy()
-        print(str(c.__dict__))
+        c.deploy(args=args)
 
     print()
     print()

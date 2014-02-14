@@ -8,3 +8,9 @@ class Deployment(object):
         """
         Deploy this deployment.
         """
+
+    @abc.abstractmethod
+    def evaluate(self):
+        """
+        Evaluate the deployment
+        """
