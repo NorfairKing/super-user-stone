@@ -1,5 +1,7 @@
 .idea/
 
+depot/
+
 # Editor files
 *.swp
 *~

@@ -1,32 +1,46 @@
+import os
 import argparse
+from os.path import expanduser
+
+import util
 
 info = """
 Super User Stone 0.0
 """
 
-
-def parse():
-    parser = argparse.ArgumentParser(description='Super User Stone')
-    parser.add_argument('-i', '--input',
-                        dest='depot',
-                        required=False,
-                        default=".",
-                        help='configuration depot')
-    parser.add_argument('--install',
-                        dest='install',
-                        action='store_true',
-                        help='install given programs (use sus_installations.cfg)')
-    parser.set_defaults(install=False)
-
-    args = parser.parse_args()
-    return args
+# Constants
+DEFAULT_CONFIGURATIONS_FILE_NAME = "sus_configurations.cfg"
 
 
-def deploy(args):
-    print(str(args))
-    pass
+# Parse command line argument
+parser = argparse.ArgumentParser(description='Super User Stone')
+parser.add_argument('-i', '--input',
+                    dest='depot',
+                    required=True,
+                    help='configuration depot')
+parser.add_argument('--copy',
+                    dest='copy',
+                    action='store_true',
+                    help='copy configurations instead of linking them')
+parser.set_defaults(copy=False)
+args = parser.parse_args()
+
+depot = os.path.abspath(args.depot)
+
+configurations_file = os.path.join(depot, DEFAULT_CONFIGURATIONS_FILE_NAME)
+configurations_file_exists = os.path.isfile(configurations_file)
+if configurations_file_exists:
+    configurations_parser = util.get_parser(configurations_file)
+    configurations_parse_error = configurations_parser is None
+
+def deploy():
+    deploy_configurations()
+
+
+def deploy_configurations():
+    print(depot)
 
 
 if __name__ == "__main__":
-    args = parse()
-    deploy(args)
+    print(info)
+    deploy()
