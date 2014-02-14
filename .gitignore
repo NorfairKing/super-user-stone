@@ -1,3 +1,10 @@
+.idea/
+
+# Editor files
+*.swp
+*~
+
+# Runtime Python files
 *.py[cod]
 
 # C extensions
