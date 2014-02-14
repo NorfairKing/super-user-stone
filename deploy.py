@@ -15,7 +15,7 @@ Super User Stone 0.0
 DEFAULT_CONFIGURATIONS_FILE_NAME = "sus_configurations.cfg"
 
 
-# Parse command line argument
+# Parse command line arguments
 parser = argparse.ArgumentParser(description='Super User Stone')
 parser.add_argument('-i', '--input',
                     dest='depot',
@@ -25,6 +25,10 @@ parser.add_argument('--dry',
                     dest='dry',
                     action='store_true',
                     help='don\'t actually do anything, just show what would happen.')
+parser.add_argument('--replace',
+                    dest='replace',
+                    action='store_true',
+                    help='replace existing files')
 parser.add_argument('--copy',
                     dest='copy',
                     action='store_true',
@@ -32,7 +36,7 @@ parser.add_argument('--copy',
 parser.set_defaults(dry=False, copy=False)
 args = parser.parse_args()
 
-depot = os.path.abspath(expanduser(args.depot))
+depot = util.expand(args.depot)
 
 configurations_file = os.path.join(depot, DEFAULT_CONFIGURATIONS_FILE_NAME)
 configurations_file_exists = os.path.isfile(configurations_file)
