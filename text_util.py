@@ -27,3 +27,12 @@ def get_colored_text(text, foreground, background="default", bold=False, newline
 
 def print_colored_text(text, foreground, background="default", bold=False, newline=True):
     print(get_colored_text(text, foreground, background=background, bold=bold, newline=newline))
+
+
+def status_block(value, true_color="green", false_color="red"):
+    BLOCK = "  "
+    if value:
+        color = true_color
+    else:
+        color = false_color
+    return get_colored_text(BLOCK, "default", background=color, bold=False, newline=False)
