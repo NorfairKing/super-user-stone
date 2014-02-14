@@ -1,4 +1,5 @@
 import os
+import sys
 import argparse
 from os.path import expanduser
 
@@ -6,6 +7,10 @@ import util
 import text_util
 
 from configuration import Configuration
+
+with open("last_use.txt", "w") as text_file:
+    print("Last time SUS was deployed, you used the following command: " + " ".join(sys.argv), file=text_file)
+
 
 info = """
 Super User Stone 0.0

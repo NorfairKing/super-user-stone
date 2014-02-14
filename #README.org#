@@ -1,0 +1,26 @@
+* Super User Stone
+The configurations deployer that turns any computer into your computer.
+
+Have you ever been frustrated that you had to put all your configuration files in place again after reinstalling your operating system?
+If you forgot to even make back-ups of your configuration files you even had to remake al those configuration files.
+Well, that was the last time you face such a problem, thanks to the Super User Stone.
+
+SUS manages the deployment of your config files and aids you in speeding up the process of reinstalling your linux operating system.
+
+** Usage
+There are two main ways to use SUS.
+ - Along with dropbox.
+ - Along with a backup of your config files.
+Note, these are not the only ways.
+*** The dropbox way
+    The user keeps a folder of all its config files in their dropbox.
+    When SUS is deployed, it makes symbolic links from that folder to the correct places.
+    This way, if any config file is changed, the changes are synces across systems.
+    SUS supports shared config files and host-specific config files 
+*** The backup way
+
+** Configuration
+*** Configurations
+*** Relocations
+*** Installations
+** TODO FAQ
