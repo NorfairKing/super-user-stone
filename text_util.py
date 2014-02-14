@@ -20,8 +20,8 @@ def get_colored_text(text, foreground, background="default", bold=False, newline
 
         result += "\033[0m"
 
-        newline_str = "\n" if newline else ""
-        result += newline_str
+        if newline:
+            result += "\n"
     return result
 
 

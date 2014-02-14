@@ -2,8 +2,9 @@ import os
 import socket
 
 from deployment import Deployment
-import util
 
+import util
+import text_util
 
 DEFAULT_SHARED_FOLDER_NAME = "shared"
 
@@ -34,7 +35,8 @@ class Configuration(Deployment):
         self.check_before()
         self.link(args)
         self.check_after()
-        self.evaluate()
+        if not args.dry:
+            self.evaluate()
 
     def check_before(self):
         self.dst_exists_before = os.path.exists(self.destination)
@@ -68,12 +70,21 @@ class Configuration(Deployment):
                         util.remove_dir(self.destination)
                     else:
                         #SUS should never get here.
-                        print("wtf is this shit?")
+                        raise Exception("WTF is this shit")
                 else:
-                    print("file " + self.destination + " already exists")
+                    # ("file " + self.destination + " already exists")
                     return
             util.link(self.source, self.destination)
 
 
     def evaluate(self):
-        pass
+        def get_blocks(bool_list):
+            result = ""
+            for b in bool_list:
+                result += " " + text_util.status_block(b)
+            return result[1:]
+
+        blocks = [True, False] #For testing purpses.
+        #TODO actual evaluation
+
+        print(get_blocks(blocks) + " " + self.source + " -> " + self.destination)
