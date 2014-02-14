@@ -55,25 +55,23 @@ class Configuration(Deployment):
             print(str(self.source) + " -> " + str(self.destination))
             return
 
+        if self.dst_exists_before:
+            if args.replace:
+                if self.dst_is_link_before:
+                    util.unlink(self.destination)
+                elif self.dst_is_file_before:
+                    util.remove(self.destination)
+                elif self.dst_is_dir_before:
+                    util.remove_dir(self.destination)
+                else:
+                    #SUS should never get here.
+                    raise Exception("WTF is this shit")
+            else:
+                # File already exists and isn't going to be replaced.
+                return
         if args.copy:
-            if self.dst_exists_before:
-                os.remove(self.destination)
             util.copy(self.source, self.destination)
         else:
-            if self.dst_exists_before:
-                if args.replace:
-                    if self.dst_is_link_before:
-                        util.unlink(self.destination)
-                    elif self.dst_is_file_before:
-                        util.remove(self.destination)
-                    elif self.dst_is_dir_before:
-                        util.remove_dir(self.destination)
-                    else:
-                        #SUS should never get here.
-                        raise Exception("WTF is this shit")
-                else:
-                    # ("file " + self.destination + " already exists")
-                    return
             util.link(self.source, self.destination)
 
 
