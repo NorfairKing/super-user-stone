@@ -13,7 +13,7 @@ with open("last_use.txt", "w") as text_file:
 
 
 info = """
-Super User Stone 0.0
+Super User Stone 0.1
 """
 
 # Constants
@@ -58,7 +58,7 @@ def deploy_configurations():
     print()
 
     print("Configurations:")
-    print(text_util.status_block(configurations_file_exists), "File Exists")
+    print(text_util.status_block(configurations_file_exists), "SUS config File Exists")
     if not configurations_file_exists:
         return
     print(text_util.status_block(configurations_parse_succes), "Parse Succes")

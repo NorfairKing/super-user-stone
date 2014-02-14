@@ -36,9 +36,13 @@ class Configuration(Deployment):
         self.link(args)
         self.check_after()
         if not args.dry:
-            self.evaluate()
+            self.evaluate(args)
 
     def check_before(self):
+        self.src_is_file = os.path.isfile(self.source)
+        self.src_is_link = os.path.islink(self.source)
+        self.src_is_dir = os.path.isdir(self.source)
+
         self.dst_exists_before = os.path.exists(self.destination)
         self.dst_is_file_before = os.path.isfile(self.destination)
         self.dst_is_link_before = os.path.islink(self.destination)
@@ -75,14 +79,21 @@ class Configuration(Deployment):
             util.link(self.source, self.destination)
 
 
-    def evaluate(self):
+    def evaluate(self, args):
         def get_blocks(bool_list):
             result = ""
             for b in bool_list:
                 result += " " + text_util.status_block(b)
             return result[1:]
 
-        blocks = [True, False] #For testing purpses.
-        #TODO actual evaluation
+        blocks = list()
+        blocks.append(self.dst_exists_after)
+        blocks.append(
+            self.src_is_dir == self.dst_is_dir_after and self.src_is_file == self.dst_is_file_after)
+
+        if args.copy:
+            blocks.append(not self.dst_is_link_after)
+        else:
+            blocks.append(self.dst_is_link_after)
 
         print(get_blocks(blocks) + " " + self.source + " -> " + self.destination)
