@@ -1,6 +1,66 @@
-* Super-User-Stone
+* Super User Stone
 The configurations deployer that turns any computer into your computer.
 
-** TODO How to use
-** TODO How to configure
-** TODO FAQ
+Have you ever been frustrated that you had to put all your configuration files in place again after reinstalling your operating system?
+If you forgot to even make back-ups of your configuration files you even had to remake al those configuration files.
+Well, that was the last time you face such a problem, thanks to the Super User Stone.
+
+SUS manages the deployment of your config files and aids you in speeding up the process of reinstalling your linux operating system.
+
+** Usage
+*** Deploying SUS
+    note: if anything is unclear, run SUS with the '--help' option.
+*** Suggestions
+There are two suggested ways to use SUS.
+ - Along with dropbox.
+ - Along with a backup of your config files.
+**** The dropbox way
+     The user keeps a folder of all its config files (along with the SUS config files) in their dropbox.
+     When SUS is deployed, it makes symbolic links from that folder to the correct places.
+     This way, if any config file is changed, the changes are synces across systems.
+     SUS supports shared config files and host-specific config files so that config files don't even need to be duplicated.
+**** The backup way
+     The user keeps a folder of all its config files (along with the SUS config files) in some safe place.
+     When SUS is deployed with the 'copy' option, the config files get copied into the correct folders.
+     When changing a config file, the user must make sure to edit the original files for the change to persist.
+** Configuration
+   SUS will need some files to know what to to.
+   These files should be stored in the same directory.
+   We will call this directory the config depot, but you can name it what you like.
+   It should look like this:
+   #+BEGIN_EXAMPLE
+   . (depot)
+   |-shared/
+   |-hostname1/
+   |-hostname2/
+   |-sus_configurations.cfg
+   |-sus_relocations.cfg
+   |-sus_installations.cfg
+   #+END_EXAMPLE
+    
+   Note: Make sure these files are named correctly.
+*** Configurations
+    For config files, SUS will need the following file:
+    #+BEGIN_EXAMPLE
+    sus_configurations.cfg
+    #+END_EXAMPLE
+    This file is a typical python configuration file.
+    Every section should be a path. e.g. '~', '/home/username/', ...
+    The option in section should look like this: 
+    #+BEGIN_EXAMPLE
+    source_file_name: destination_file_name
+    #+END_EXAMPLE
+    Here, 'source_file_name' should be the name of the file in the 'shared' (or 'hostname') dir in the depot.
+    'destination_file_name' should be the name of the file when it is deployed.
+    Example:
+    #+BEGIN_EXAMPLE
+    [~]
+    bash_aliases: .bash_aliases
+    bashrc: .bashrc
+    #+END_EXAMPLE
+*** Relocations
+    Under Construction
+*** Installations
+    Under Construction
+** FAQ
+   No questions have been asked yet.

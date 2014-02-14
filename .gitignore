@@ -6,6 +6,7 @@ last_use.txt
 # Editor files
 *.swp
 *~
+\#*\#
 
 # Runtime Python files
 *.py[cod]
