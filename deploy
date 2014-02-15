@@ -1,0 +1,4 @@
+#!/bin/bash
+HERE="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+echo "$0 $@" > last_use.txt
+python3 "$HERE/sus/deploy.py" $@
