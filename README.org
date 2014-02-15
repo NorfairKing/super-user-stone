@@ -1,12 +1,20 @@
 * Super User Stone
 The configurations deployer that turns any computer into your computer.
 
+** Primary Feature
 Have you ever been frustrated that you had to put all your configuration files in place again after reinstalling your operating system?
 If you forgot to even make back-ups of your configuration files you even had to remake al those configuration files.
 Well, that was the last time you face such a problem, thanks to the Super User Stone.
 
 SUS manages the deployment of your config files and aids you in speeding up the process of reinstalling your linux operating system.
-
+** Other Features
+*** Relocations
+    SUS provides support for folder relocations.
+    A relocation is best explained using dropbox, but is also possible when using the backup way.
+    A reloc folder is a folder that you keep in your depot in the relocations folder which is linked to a more user-friendly place.
+    This ensures that the reloc folder is synced across systems, but doesn't have to only be accessible from your dropbox.
+*** Installations
+    Under construction
 ** Usage
 *** Deploying SUS
     note: if anything is unclear, run SUS with the '--help' option.
@@ -33,16 +41,18 @@ There are two suggested ways to use SUS.
    |-shared/
    |-hostname1/
    |-hostname2/
+   |-relocations/
+   |--reloc_folder_1
+   |--reloc_folder_2
    |-sus_configurations.cfg
    |-sus_relocations.cfg
    |-sus_installations.cfg
    #+END_EXAMPLE
-    
    Note: Make sure these files are named correctly.
 *** Configurations
     For config files, SUS will need the following file:
     #+BEGIN_EXAMPLE
-    sus_configurations.cfg
+    configurations.sus
     #+END_EXAMPLE
     This file is a typical python configuration file.
     Every section should be a path. e.g. '~', '/home/username/', ...
@@ -59,7 +69,17 @@ There are two suggested ways to use SUS.
     bashrc: .bashrc
     #+END_EXAMPLE
 *** Relocations
-    Under Construction
+    For relocations, SUS will need the following file:
+    #+BEGIN_EXAMPLE                                                                                                                                                           
+    relocations.sus                                                                                                                                                    
+    #+END_EXAMPLE
+    This file should be formatted like the configurations file, but every option should be a folder, otherwise nothing will happen with it.
+    Example:
+    #+BEGIN_EXAMPLE                                                                                                                                                           
+    [~]                                                                                                                                                                       
+    pictures: Pictures                                                                                                                                               
+    music: Music                                                                                                                                                           
+    #+END_EXAMPLE
 *** Installations
     Under Construction
 ** FAQ
