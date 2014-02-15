@@ -70,15 +70,15 @@ There are two suggested ways to use SUS.
     #+END_EXAMPLE
 *** Relocations
     For relocations, SUS will need the following file:
-    #+BEGIN_EXAMPLE                                                                                                                                                           
-    relocations.sus                                                                                                                                                    
+    #+BEGIN_EXAMPLE
+    relocations.sus
     #+END_EXAMPLE
     This file should be formatted like the configurations file, but every option should be a folder, otherwise nothing will happen with it.
     Example:
     #+BEGIN_EXAMPLE                                                                                                                                                           
     [~]                                                                                                                                                                       
-    pictures: Pictures                                                                                                                                               
-    music: Music                                                                                                                                                           
+    pictures: Pictures
+    music: Music
     #+END_EXAMPLE
 *** Installations
     Under Construction
