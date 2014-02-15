@@ -1,5 +1,8 @@
+"""
+The deploy script.
+"""
+
 import os
-import sys
 import argparse
 from os.path import expanduser
 
@@ -8,17 +11,11 @@ import text_util
 
 from configuration import Configuration
 
-with open("last_use.txt", "w") as text_file:
-    print("Last time SUS was deployed, you used the following command: " + " ".join(sys.argv), file=text_file)
-
+import config as conf
 
 info = """
 Super User Stone 0.1
 """
-
-# Constants
-DEFAULT_CONFIGURATIONS_FILE_NAME = "sus_configurations.cfg"
-
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Super User Stone')
@@ -43,7 +40,7 @@ args = parser.parse_args()
 
 depot = util.expand(args.depot)
 
-configurations_file = os.path.join(depot, DEFAULT_CONFIGURATIONS_FILE_NAME)
+configurations_file = os.path.join(depot, conf.CONFIGURATIONS_FILE_NAME)
 configurations_file_exists = os.path.isfile(configurations_file)
 if configurations_file_exists:
     configurations_parser = util.get_parser(configurations_file)
@@ -51,10 +48,16 @@ if configurations_file_exists:
 
 
 def deploy():
+    """
+    Deploy SUS entirely
+    """
     deploy_configurations()
 
 
 def deploy_configurations():
+    """
+    Deploy configurations as specified by the config file.
+    """
     print()
 
     print("Configurations:")
@@ -80,6 +83,18 @@ def deploy_configurations():
 
     print()
     print()
+
+
+def deploy_relocations():
+    """
+    Deploy relocations as specified by the config file.
+    """
+
+
+def deploy_installations():
+    """
+    Deploy installations as specified by the config file.
+    """
 
 
 if __name__ == "__main__":

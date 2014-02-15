@@ -1,20 +1,34 @@
+"""
+SUS configuration
+"""
+
 import os
 import socket
 
-from deployment import Deployment
-
 import util
 import text_util
+from deployment import Deployment
 
-DEFAULT_SHARED_FOLDER_NAME = "shared"
+import config as conf
 
 
 class Configuration(Deployment):
+    """
+    A class of configuration deployments.
+    Any instance of this class represents a deployment of exactly one config file.
+    """
+
     def __init__(self, depot, config_file_name, destination_path):
+        """
+        Initialize all information that is needed to perform and evaluate the deployment of this configuration.
+        @param depot: The path to the depot folder.
+        @param config_file_name: The name of the config file to deploy.
+        @param destination_path: The path to the destination of the config file.
+        """
         self.depot = depot
         self.config_file_name = config_file_name
 
-        self.shared_folder_path = os.path.join(depot, DEFAULT_SHARED_FOLDER_NAME)
+        self.shared_folder_path = os.path.join(depot, conf.SHARED_FOLDER_NAME)
         self.host_folder_path = os.path.join(depot, socket.gethostname())
 
         self.config_in_shared_folder = os.path.join(self.shared_folder_path, self.config_file_name)
@@ -32,6 +46,10 @@ class Configuration(Deployment):
 
 
     def deploy(self, args):
+        """
+        Deploy this configuration.
+        @param args: The parsed arguments from the command-line.
+        """
         self.check_before()
         self.link(args)
         self.check_after()
@@ -39,6 +57,9 @@ class Configuration(Deployment):
             self.evaluate(args)
 
     def check_before(self):
+        """
+        Check the state of the configuration before deployment.
+        """
         self.src_is_file = os.path.isfile(self.source)
         self.src_is_link = os.path.islink(self.source)
         self.src_is_dir = os.path.isdir(self.source)
@@ -49,12 +70,19 @@ class Configuration(Deployment):
         self.dst_is_dir_before = os.path.isdir(self.destination)
 
     def check_after(self):
+        """
+        Check the state of the configuration after deployment.
+        """
         self.dst_exists_after = os.path.exists(self.destination)
         self.dst_is_file_after = os.path.isfile(self.destination)
         self.dst_is_link_after = os.path.islink(self.destination)
         self.dst_is_dir_after = os.path.isdir(self.destination)
 
     def link(self, args):
+        """
+        Actually deploy the configuration by linking the correct spot to the original file.
+        @param args: The parsed arguments from the command-line.
+        """
         if args.dry:
             print(str(self.source) + " -> " + str(self.destination))
             return
@@ -80,6 +108,11 @@ class Configuration(Deployment):
 
 
     def evaluate(self, args):
+        """
+        Evaluate the deployment of this configuration.
+        @param args: The parsed arguments from the command-line.
+        """
+
         def get_blocks(bool_list):
             result = ""
             for b in bool_list:
