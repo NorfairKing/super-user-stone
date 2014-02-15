@@ -76,7 +76,7 @@ There are two suggested ways to use SUS.
     This file should be formatted like the configurations file, but every option should be a folder, otherwise nothing will happen with it.
     Example:
     #+BEGIN_EXAMPLE                                                                                                                                                           
-    [~]                                                                                                                                                                       
+    [~]
     pictures: Pictures
     music: Music
     #+END_EXAMPLE
