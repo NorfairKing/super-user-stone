@@ -14,7 +14,8 @@ SUS manages the deployment of your config files and aids you in speeding up the 
     A reloc folder is a folder that you keep in your depot in the relocations folder which is linked to a more user-friendly place.
     This ensures that the reloc folder is synced across systems, but doesn't have to only be accessible from your dropbox.
 *** Installations
-    Under construction
+    SUS can also execute commands.
+    Typically this feature is used to install files at first use.
 ** Usage
 *** Deploying SUS
     note: if anything is unclear, run SUS with the '--help' option.
@@ -81,6 +82,22 @@ There are two suggested ways to use SUS.
     music: Music
     #+END_EXAMPLE
 *** Installations
-    Under Construction
+    For relocations, SUS will need the following file:
+    #+BEGIN_EXAMPLE
+    installations.sus
+    #+END_EXAMPLE
+    This file should be formatted with one 'Sudo' section and one 'Default' secton.
+    The option should be the command to execute, the value should be the arguments.
+    #+BEGIN_EXAMPLE
+    [Sudo]
+    install_command: program
+    [Default]
+    command: argument1 argument2
+    #+END_EXAMPLE
+    Example:
+    #+BEGIN_EXAMPLE                                                                                                                                                           
+    [Sudo]
+    packer -S: git python ghc
+    #+END_EXAMPLE
 ** FAQ
    No questions have been asked yet.
