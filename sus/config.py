@@ -5,6 +5,7 @@ The user should never have to alter this file.
 
 SUS_EXTENSION = ".sus"
 
+INSTALLATIONS_FILE_NAME = "installations" + SUS_EXTENSION
 CONFIGURATIONS_FILE_NAME = "configurations" + SUS_EXTENSION
 RELOCATIONS_FILE_NAME = "relocations" + SUS_EXTENSION
 
@@ -15,3 +16,6 @@ DEFAULT_TRUE_COLOR = "green"
 DEFAULT_FALSE_COLOR = "red"
 
 EVALUATION_BLOCK = "  "
+
+SUDO_INSTALLATION_SECTION = "Sudo"
+DEFAULT_INSTALLATION_SECTION = "Default"
