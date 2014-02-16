@@ -9,6 +9,7 @@ from os.path import expanduser
 import util
 import text_util
 
+from installation import Installation
 from configuration import Configuration
 from relocation import Relocation
 
@@ -41,6 +42,13 @@ args = parser.parse_args()
 
 depot = util.expand(args.depot)
 
+#installations
+installations_file = os.path.join(depot, conf.INSTALLATIONS_FILE_NAME)
+installations_file_exists = os.path.isfile(installations_file)
+if installations_file_exists:
+    installations_parser = util.get_parser(installations_file)
+    installations_parse_succes = not (installations_parser is None)
+
 #configurations
 configurations_file = os.path.join(depot, conf.CONFIGURATIONS_FILE_NAME)
 configurations_file_exists = os.path.isfile(configurations_file)
@@ -60,8 +68,38 @@ def deploy():
     """
     Deploy SUS entirely
     """
+    deploy_installations()
     deploy_configurations()
     deploy_relocations()
+
+
+def deploy_installations():
+    """
+    Deploy installations as specified by the config file.
+    """
+    print()
+
+    print("Installations:")
+    print(text_util.status_block(installations_file_exists), "SUS installations config file existence")
+    if not installations_file_exists:
+        return
+    print(text_util.status_block(installations_parse_succes), "Parse Succes")
+    if not installations_parse_succes:
+        return
+
+    print()
+
+    installs = []
+    for option, cfg in installations_parser.items(conf.SUDO_INSTALLATION_SECTION):
+        print(option, cfg)
+        installs.append(Installation(command=option, arguments=cfg, sudo=True))
+
+    for option, cfg in installations_parser.items(conf.DEFAULT_INSTALLATION_SECTION):
+        print(option, cfg)
+        installs.append(Installation(command=option, arguments=cfg, sudo=False))
+
+    for i in installs:
+        i.deploy()
 
 
 def deploy_configurations():
@@ -126,12 +164,6 @@ def deploy_relocations():
 
     print()
     print()
-
-
-def deploy_installations():
-    """
-    Deploy installations as specified by the config file.
-    """
 
 
 if __name__ == "__main__":

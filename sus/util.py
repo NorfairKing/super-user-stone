@@ -4,6 +4,7 @@ SUS utility functions
 
 import os
 import shutil
+import subprocess
 import configparser
 from os.path import expanduser
 
@@ -72,3 +73,11 @@ def get_parser(path):
     except configparser.ParsingError:
         return None
     return config_parser
+
+
+def call(command_string, sudo):
+    if sudo:
+        command_string = "sudo " + command_string
+
+    process = subprocess.Popen(command_string, shell=True)
+    process.wait()
