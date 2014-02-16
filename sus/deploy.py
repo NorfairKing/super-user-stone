@@ -16,7 +16,7 @@ from relocation import Relocation
 import config as conf
 
 info = """
-Super User Stone 0.2
+Super User Stone 0.3
 """
 
 # Parse command line arguments
