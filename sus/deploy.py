@@ -29,6 +29,10 @@ parser.add_argument('--dry',
                     dest='dry',
                     action='store_true',
                     help='don\'t actually do anything, just show what would happen.')
+parser.add_argument('--install',
+                    dest='install',
+                    action='store_true',
+                    help='Install all preferred packages as specified in \'installations.sus\'.')
 parser.add_argument('--replace',
                     dest='replace',
                     action='store_true',
@@ -68,7 +72,8 @@ def deploy():
     """
     Deploy SUS entirely
     """
-    deploy_installations()
+    if (args.install):
+        deploy_installations()
     deploy_configurations()
     deploy_relocations()
 
