@@ -38,8 +38,7 @@ class Configuration(Deployment):
         self.host_config_exists = os.path.exists(self.config_in_host_folder)
 
         self.source = None
-        if self.shared_config_exists:
-            self.source = self.config_in_shared_folder
+        self.source = self.config_in_shared_folder
         if self.host_config_exists:
             self.source = self.config_in_host_folder
         self.destination = destination_path
@@ -131,8 +130,9 @@ class Configuration(Deployment):
         blocks = list()
         blocks.append(self.src_exists)
         blocks.append(self.dst_exists_after)
-        blocks.append(
-            self.src_is_dir == self.dst_is_dir_after and self.src_is_file == self.dst_is_file_after)
+        blocks.append(self.src_exists
+                      and self.src_is_dir == self.dst_is_dir_after
+                      and self.src_is_file == self.dst_is_file_after)
 
         if args.copy:
             blocks.append(not self.dst_is_link_after)

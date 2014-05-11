@@ -48,6 +48,7 @@ def copy(src, dst):
     @param src: The given source.
     @param dst: The given destination
     """
+    ensure_dir(dst)
     shutil.copy(expand(src), expand(dst))
 
 
@@ -57,7 +58,14 @@ def link(src, dst):
     @param src: The given source.
     @param dst: The given destination
     """
+    ensure_dir(dst)
     os.symlink(expand(src), expand(dst))
+
+def ensure_dir(file):
+    d = os.path.dirname(file)
+    if not os.path.exists(d):
+        os.makedirs(d)
+
 
 
 def get_parser(path):
