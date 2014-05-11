@@ -48,8 +48,10 @@ def copy(src, dst):
     @param src: The given source.
     @param dst: The given destination
     """
+    dst = expand(dst)
+    src = expand(src)
     ensure_dir(dst)
-    shutil.copy(expand(src), expand(dst))
+    shutil.copy(src, dst)
 
 
 def link(src, dst):
@@ -58,8 +60,10 @@ def link(src, dst):
     @param src: The given source.
     @param dst: The given destination
     """
+    dst = expand(dst)
+    src = expand(src)
     ensure_dir(dst)
-    os.symlink(expand(src), expand(dst))
+    os.symlink(src, dst)
 
 def ensure_dir(file):
     d = os.path.dirname(file)
