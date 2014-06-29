@@ -18,7 +18,7 @@ from relocation import Relocation
 import config as conf
 
 info = """
-Super User Stone 0.3
+Super User Stone 0.4
 """
 
 # Parse command line arguments
@@ -194,14 +194,14 @@ def make_last_run_file():
     """
     Make the last run file
     """
-    with open(os.path.join(depot, ".last_run"), 'w') as f:
+    with open(os.path.join(depot, conf.LAST_RUN_FILE), 'w') as f:
         f.write(" ".join(sys.argv))
 
 def rerun():
     """
     Rerun the last deployment.
     """
-    with open(os.path.join(depot, ".last_run"), 'r') as f:
+    with open(os.path.join(depot, conf.LAST_RUN_FILE), 'r') as f:
         cmd = "python3 " + f.readline()
         process = subprocess.Popen(cmd, shell=True)
         process.wait()
