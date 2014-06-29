@@ -58,6 +58,11 @@ parser.add_argument('--rerun',
                     action='store_true',
                     default=False,
                     help='Do nothing else but re run the last deployment.')
+parser.add_argument('--colorless',
+                    dest='color',
+                    action='store_false',
+                    default=True,
+                    help='Don\'t use any colors.')
 parser.set_defaults(dry=False, copy=False)
 args = parser.parse_args()
 
@@ -104,10 +109,14 @@ def deploy_installations():
     print()
 
     print("Installations:")
-    print(text_util.status_block(installations_file_exists), "SUS installations config file existence")
+    if args.color:
+        print(text_util.status_block(installations_file_exists), end="")
+    print("SUS installations config file existence")
     if not installations_file_exists:
         return
-    print(text_util.status_block(installations_parse_succes), "Parse Succes")
+    if args.color:
+        print(text_util.status_block(installations_parse_succes), end="")
+    print("Parse Succes")
     if not installations_parse_succes:
         return
 
@@ -133,10 +142,14 @@ def deploy_configurations():
     print()
 
     print("Configurations:")
-    print(text_util.status_block(relocations_file_exists), "SUS configurations config file existence")
-    if not relocations_file_exists:
+    if args.color:
+        print(text_util.status_block(configurations_file_exists), end=" ")
+    print("SUS configurations config file existence")
+    if not configurations_file_exists:
         return
-    print(text_util.status_block(configurations_parse_succes), "Parse Succes")
+    if args.color:
+        print(text_util.status_block(configurations_parse_succes), end=" ")
+    print("Parse Succes")
     if not configurations_parse_succes:
         return
 
@@ -165,10 +178,14 @@ def deploy_relocations():
     print()
 
     print("Relocations:")
-    print(text_util.status_block(relocations_file_exists), "SUS relocations config file existence")
+    if args.color:
+        print(text_util.status_block(relocations_file_exists), end=" ")
+    print("SUS relocations config file existence")
     if not relocations_file_exists:
         return
-    print(text_util.status_block(relocations_parse_succes), "Parse Succes")
+    if args.color:
+        print(text_util.status_block(relocations_parse_succes), end=" ")
+    print("Parse Succes")
     if not relocations_parse_succes:
         return
 
@@ -196,6 +213,7 @@ def make_last_run_file():
     """
     with open(os.path.join(depot, conf.LAST_RUN_FILE), 'w') as f:
         f.write(" ".join(sys.argv))
+
 
 def rerun():
     """

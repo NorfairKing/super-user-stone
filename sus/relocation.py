@@ -109,11 +109,13 @@ class Relocation(Deployment):
             return
 
         def get_blocks(bool_list):
-            result = ""
-            for b in bool_list:
-                result += " " + text_util.status_block(b)
-            return result[1:]
-
+            if args.color:
+                result = ""
+                for b in bool_list:
+                    result += " " + text_util.status_block(b)
+                return result[1:]
+            else:
+                return ""
         blocks = list()
         blocks.append(self.dst_exists_after)
         blocks.append(
