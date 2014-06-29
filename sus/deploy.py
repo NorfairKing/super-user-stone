@@ -5,6 +5,7 @@ The deploy script.
 import os
 import sys
 import argparse
+import subprocess
 from os.path import expanduser
 
 import util
@@ -52,6 +53,11 @@ parser.add_argument('--no-last-run-file',
                     action='store_false',
                     default=True,
                     help='Don\'t make a last-run file.')
+parser.add_argument('--rerun',
+                    dest='rerun',
+                    action='store_true',
+                    default=False,
+                    help='Do nothing else but re run the last deployment.')
 parser.set_defaults(dry=False, copy=False)
 args = parser.parse_args()
 
@@ -191,7 +197,19 @@ def make_last_run_file():
     with open(os.path.join(depot, ".last_run"), 'w') as f:
         f.write(" ".join(sys.argv))
 
+def rerun():
+    """
+    Rerun the last deployment.
+    """
+    with open(os.path.join(depot, ".last_run"), 'r') as f:
+        cmd = "python3 " + f.readline()
+        process = subprocess.Popen(cmd, shell=True)
+        process.wait()
+
 
 if __name__ == "__main__":
+    if args.rerun:
+        rerun()
+        exit()
     print(info)
     deploy()
