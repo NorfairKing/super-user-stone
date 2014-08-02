@@ -10,9 +10,9 @@ SUS manages the deployment of your config files and aids you in speeding up the 
 ** Other Features
 *** Relocations
     SUS provides support for folder relocations.
-    A relocation is best explained using dropbox, but is also possible when using the backup way.
+    A relocation is best explained using a synchronization method, but is also possible when using the backup way.
     A reloc folder is a folder that you keep in your depot in the relocations folder which is linked to a more user-friendly place.
-    This ensures that the reloc folder is synced across systems, but doesn't have to only be accessible from your dropbox.
+    This ensures that the reloc folder is synced across systems, but doesn't have to only be accessible from your synchronized folder.
 *** Installations
     SUS can also execute commands.
     Typically this feature is used to install files at first use.
@@ -21,10 +21,10 @@ SUS manages the deployment of your config files and aids you in speeding up the 
     note: if anything is unclear, run SUS with the '--help' option.
 *** Suggestions
 There are two suggested ways to use SUS.
- - Along with dropbox.
+ - Along with a synchronization method
  - Along with a backup of your config files.
 **** The dropbox way
-     The user keeps a folder of all its config files (along with the SUS config files) in their dropbox.
+     The user keeps a folder of all its config files (along with the SUS config files) in a synchronized folder (like a Dropbox).
      When SUS is deployed, it makes symbolic links from that folder to the correct places.
      This way, if any config file is changed, the changes are synces across systems.
      SUS supports shared config files and host-specific config files so that config files don't even need to be duplicated.
