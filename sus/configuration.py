@@ -7,12 +7,10 @@ import socket
 
 import util
 import text_util
-from deployment import Deployment
-
 import config as conf
 
 
-class Configuration(Deployment):
+class Configuration(object):
     """
     A class of configuration deployments.
     Any instance of this class represents a deployment of exactly one config file.
@@ -125,7 +123,7 @@ class Configuration(Deployment):
             if args.color:
                 result = ""
                 for b in bool_list:
-                    result += " " + text_util.status_block(b)
+                    result += "|" + text_util.status_block(b)
                 return result[1:]
             else:
                 return ""

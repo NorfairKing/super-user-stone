@@ -11,19 +11,17 @@ from os.path import expanduser
 import util
 import text_util
 
-from installation import Installation
 from configuration import Configuration
-from relocation import Relocation
 
 import config as conf
 
 info = """
-Super User Stone 0.4
+Super User Stone 0.5
 """
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description='Super User Stone')
-parser.add_argument('-i', '--input',
+parser.add_argument('-d', '--depot',
                     dest='depot',
                     required=True,
                     default=False,
@@ -33,11 +31,6 @@ parser.add_argument('--dry',
                     action='store_true',
                     default=False,
                     help='don\'t actually do anything, just show what would happen.')
-parser.add_argument('--install',
-                    dest='install',
-                    action='store_true',
-                    default=False,
-                    help='Install all preferred packages as specified in \'installations.sus\'.')
 parser.add_argument('--replace',
                     dest='replace',
                     action='store_true',
@@ -68,13 +61,6 @@ args = parser.parse_args()
 
 depot = util.expand(args.depot)
 
-#installations
-installations_file = os.path.join(depot, conf.INSTALLATIONS_FILE_NAME)
-installations_file_exists = os.path.isfile(installations_file)
-if installations_file_exists:
-    installations_parser = util.get_parser(installations_file)
-    installations_parse_succes = not (installations_parser is None)
-
 #configurations
 configurations_file = os.path.join(depot, conf.CONFIGURATIONS_FILE_NAME)
 configurations_file_exists = os.path.isfile(configurations_file)
@@ -82,58 +68,16 @@ if configurations_file_exists:
     configurations_parser = util.get_parser(configurations_file)
     configurations_parse_succes = not (configurations_parser is None)
 
-#relocations
-relocations_file = os.path.join(depot, conf.RELOCATIONS_FILE_NAME)
-relocations_file_exists = os.path.isfile(relocations_file)
-if relocations_file_exists:
-    relocations_parser = util.get_parser(relocations_file)
-    relocations_parse_succes = not (relocations_parser is None)
-
 
 def deploy():
     """
     Deploy SUS entirely
     """
-    if (args.install):
-        deploy_installations()
+
     deploy_configurations()
-    deploy_relocations()
+
     if args.last_run_file:
         make_last_run_file()
-
-
-def deploy_installations():
-    """
-    Deploy installations as specified by the config file.
-    """
-    print()
-
-    print("Installations:")
-    if args.color:
-        print(text_util.status_block(installations_file_exists), end="")
-    print("SUS installations config file existence")
-    if not installations_file_exists:
-        return
-    if args.color:
-        print(text_util.status_block(installations_parse_succes), end="")
-    print("Parse Succes")
-    if not installations_parse_succes:
-        return
-
-    print()
-
-    installs = []
-    for option, cfg in installations_parser.items(conf.SUDO_INSTALLATION_SECTION):
-        print(option, cfg)
-        installs.append(Installation(command=option, arguments=cfg, sudo=True))
-
-    for option, cfg in installations_parser.items(conf.DEFAULT_INSTALLATION_SECTION):
-        print(option, cfg)
-        installs.append(Installation(command=option, arguments=cfg, sudo=False))
-
-    for i in installs:
-        i.deploy()
-
 
 def deploy_configurations():
     """
@@ -165,47 +109,12 @@ def deploy_configurations():
 
     for c in configs:
         c.deploy(args=args)
+
+    for c in configs:
         c.evaluate(args=args)
 
     print()
     print()
-
-
-def deploy_relocations():
-    """
-    Deploy relocations as specified by the config file.
-    """
-    print()
-
-    print("Relocations:")
-    if args.color:
-        print(text_util.status_block(relocations_file_exists), end=" ")
-    print("SUS relocations config file existence")
-    if not relocations_file_exists:
-        return
-    if args.color:
-        print(text_util.status_block(relocations_parse_succes), end=" ")
-    print("Parse Succes")
-    if not relocations_parse_succes:
-        return
-
-    print()
-
-    relocs = []
-    sections = relocations_parser.sections()
-    for section in sections:
-        for option, cfg in relocations_parser.items(section):
-            relocation_file_name = option
-            destination_path = os.path.join(expanduser(section), cfg)
-            relocs.append(Relocation(depot, relocation_file_name, destination_path))
-
-    for r in relocs:
-        r.deploy(args=args)
-        r.evaluate(args=args)
-
-    print()
-    print()
-
 
 def make_last_run_file():
     """
