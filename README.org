@@ -1,67 +1,54 @@
 * Super User Stone
 The configurations deployer that turns any computer into your computer.
 
-** Primary Feature
+** The basic idea
 Have you ever been frustrated that you had to put all your configuration files in place again after reinstalling your operating system?
 If you forgot to even make back-ups of your configuration files you even had to remake al those configuration files.
 Well, that was the last time you face such a problem, thanks to the Super User Stone.
 
-SUS manages the deployment of your config files and aids you in speeding up the process of reinstalling your linux operating system.
-** Other Features
-*** Relocations
-    SUS provides support for folder relocations.
-    A relocation is best explained using a synchronization method, but is also possible when using the backup way.
-    A reloc folder is a folder that you keep in your depot in the relocations folder which is linked to a more user-friendly place.
-    This ensures that the reloc folder is synced across systems, but doesn't have to only be accessible from your synchronized folder.
-*** Installations
-    SUS can also execute commands.
-    Typically this feature is used to install files at first use.
+SUS manages the deployment of your configuration files (dotfiles) and aids you in speeding up the process of reinstalling your linux operating system.
 ** Usage
-*** Deploying SUS
-    note: if anything is unclear, run SUS with the '--help' option.
 *** Suggestions
 There are two suggested ways to use SUS.
- - Along with a synchronization method
+ - Along with a synchronisation method
  - Along with a backup of your config files.
-**** The dropbox way
-     The user keeps a folder of all its config files (along with the SUS config files) in a synchronized folder (like a Dropbox).
+**** The synchronisation way
+     The user keeps a folder of all its config files (along with the SUS config files) in a synchronised folder (like Git repository or a Dropbox folder).
      When SUS is deployed, it makes symbolic links from that folder to the correct places.
-     This way, if any config file is changed, the changes are synces across systems.
+     This way, if any config file is changed, the changes are synchronised across systems.
      SUS supports shared config files and host-specific config files so that config files don't even need to be duplicated.
 **** The backup way
      The user keeps a folder of all its config files (along with the SUS config files) in some safe place.
      When SUS is deployed with the 'copy' option, the config files get copied into the correct folders.
      When changing a config file, the user must make sure to edit the original files for the change to persist.
+*** Deploying SUS
 ** Configuration
-   SUS will need some files to know what to to.
+   SUS will need some files to know what to do.
    These files should be stored in the same directory.
-   We will call this directory the config depot, but you can name it what you like.
+   We will call this directory the config *depot*, but you can name it what you like.
    It should look like this:
    #+BEGIN_EXAMPLE
-   . (depot)
+   - depot
    |-shared/
    |-hostname1/
    |-hostname2/
    |-relocations/
    |--reloc_folder_1
    |--reloc_folder_2
-   |-sus_configurations.cfg
-   |-sus_relocations.cfg
-   |-sus_installations.cfg
+   |-configurations.sus
    #+END_EXAMPLE
-   Note: Make sure these files are named correctly.
 *** Configurations
     For config files, SUS will need the following file:
     #+BEGIN_EXAMPLE
     configurations.sus
     #+END_EXAMPLE
     This file is a typical python configuration file.
-    Every section should be a path. e.g. '~', '/home/username/', ...
+    Every section should be a path. e.g. '~', '/home/user/', ...
     The option in section should look like this: 
     #+BEGIN_EXAMPLE
     source_file_name: destination_file_name
     #+END_EXAMPLE
-    Here, 'source_file_name' should be the name of the file in the 'shared' (or 'hostname') dir in the depot.
+    Here, 'source_file_name' should be the name of the file in the 'shared' (or 'hostname') directory in the depot.
     'destination_file_name' should be the name of the file when it is deployed.
     Example:
     #+BEGIN_EXAMPLE
@@ -69,35 +56,6 @@ There are two suggested ways to use SUS.
     bash_aliases: .bash_aliases
     bashrc: .bashrc
     #+END_EXAMPLE
-*** Relocations
-    For relocations, SUS will need the following file:
-    #+BEGIN_EXAMPLE
-    relocations.sus
-    #+END_EXAMPLE
-    This file should be formatted like the configurations file, but every option should be a folder, otherwise nothing will happen with it.
-    Example:
-    #+BEGIN_EXAMPLE                                                                                                                                                           
-    [~]
-    pictures: Pictures
-    music: Music
-    #+END_EXAMPLE
-*** Installations
-    For relocations, SUS will need the following file:
-    #+BEGIN_EXAMPLE
-    installations.sus
-    #+END_EXAMPLE
-    This file should be formatted with one 'Sudo' section and one 'Default' secton.
-    The option should be the command to execute, the value should be the arguments.
-    #+BEGIN_EXAMPLE
-    [Sudo]
-    install_command: program
-    [Default]
-    command: argument1 argument2
-    #+END_EXAMPLE
-    Example:
-    #+BEGIN_EXAMPLE                                                                                                                                                           
-    [Sudo]
-    packer -S: git python ghc
-    #+END_EXAMPLE
 ** FAQ
    No questions have been asked yet.
+   
