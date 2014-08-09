@@ -7,6 +7,11 @@ If you forgot to even make back-ups of your configuration files you even had to 
 Well, that was the last time you face such a problem, thanks to the Super User Stone.
 
 SUS manages the deployment of your configuration files (dotfiles) and aids you in speeding up the process of reinstalling your linux operating system.
+** Dependencies
+ - Python 3
+   - filecmp
+   - shutil
+   - configparser
 ** Usage
 *** Suggestions
 There are two suggested ways to use SUS.
