@@ -4,6 +4,7 @@ SUS configuration
 
 import os
 import socket
+import filecmp
 
 import util
 import text_util
@@ -74,6 +75,7 @@ class Configuration(object):
         self.dst_is_link_after = os.path.islink(self.destination)
         self.dst_is_dir_after = os.path.isdir(self.destination)
 
+
     def link(self, args):
         """
         Actually deploy the configuration by linking the correct spot to the original file.
@@ -139,5 +141,10 @@ class Configuration(object):
             blocks.append(not self.dst_is_link_after)
         else:
             blocks.append(self.dst_is_link_after)
+
+        if self.src_is_dir:
+            blocks.append(True)
+        else:
+            blocks.append(filecmp.cmp(self.source,self.destination))
 
         print(get_blocks(blocks) + " " + self.source + " -> " + self.destination)
