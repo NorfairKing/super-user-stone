@@ -1,12 +1,13 @@
 * Super User Stone
 The configurations deployer that turns any computer into your computer.
-
 ** The basic idea
 Have you ever been frustrated that you had to put all your configuration files in place again after reinstalling your operating system?
 If you forgot to even make back-ups of your configuration files you even had to remake al those configuration files.
 Well, that was the last time you face such a problem, thanks to the Super User Stone.
 
 SUS manages the deployment of your configuration files (dotfiles) and aids you in speeding up the process of reinstalling your linux operating system.
+
+SUS also takes care of the problems you run into when using different config files on different systems, but the systems share some config files too.
 ** Dependencies
  - Python 3
    - filecmp
@@ -27,6 +28,18 @@ There are two suggested ways to use SUS.
      When SUS is deployed with the 'copy' option, the config files get copied into the correct folders.
      When changing a config file, the user must make sure to edit the original files for the change to persist.
 *** Deploying SUS
+    1. Clone the repository
+       #+BEGIN_EXAMPLE
+       git clone git@github.com:NorfairKing/super-user-stone.git
+       #+END_EXAMPLE
+       There is no need to install SUS, you can just use it directly.
+    2. Configure your depot.
+       Have a look at the configurations section of this readme.
+    3. Run the deploy script
+       #+BEGIN_EXAMPLE
+       super-user-stone/deploy.sh -d <depot>
+       #+END_EXAMPLE
+       Run the deploy script with the --help flag to see what other options you can use.
 ** Configuration
    SUS will need some files to know what to do.
    These files should be stored in the same directory.
@@ -37,9 +50,6 @@ There are two suggested ways to use SUS.
    |-shared/
    |-hostname1/
    |-hostname2/
-   |-relocations/
-   |--reloc_folder_1
-   |--reloc_folder_2
    |-configurations.sus
    #+END_EXAMPLE
 *** Configurations
