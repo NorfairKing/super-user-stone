@@ -4,15 +4,14 @@ SUS configuration
 
 import os
 import socket
+import filecmp
 
 import util
 import text_util
-from deployment import Deployment
-
 import config as conf
 
 
-class Configuration(Deployment):
+class Configuration(object):
     """
     A class of configuration deployments.
     Any instance of this class represents a deployment of exactly one config file.
@@ -76,6 +75,7 @@ class Configuration(Deployment):
         self.dst_is_link_after = os.path.islink(self.destination)
         self.dst_is_dir_after = os.path.isdir(self.destination)
 
+
     def link(self, args):
         """
         Actually deploy the configuration by linking the correct spot to the original file.
@@ -125,7 +125,7 @@ class Configuration(Deployment):
             if args.color:
                 result = ""
                 for b in bool_list:
-                    result += " " + text_util.status_block(b)
+                    result += "|" + text_util.status_block(b)
                 return result[1:]
             else:
                 return ""
@@ -141,5 +141,10 @@ class Configuration(Deployment):
             blocks.append(not self.dst_is_link_after)
         else:
             blocks.append(self.dst_is_link_after)
+
+        if self.src_is_dir:
+            blocks.append(True)
+        else:
+            blocks.append(filecmp.cmp(self.source,self.destination))
 
         print(get_blocks(blocks) + " " + self.source + " -> " + self.destination)
