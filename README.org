@@ -1,5 +1,6 @@
 * Super User Stone
 The configurations deployer that turns any computer into your computer.
+More info, and a tutorial at [[http://blog.cs-syd.eu/super-user-stone/][CS Syd.]]
 ** The basic idea
 Have you ever been frustrated that you had to put all your configuration files in place again after reinstalling your operating system?
 If you forgot to even make back-ups of your configuration files you even had to remake al those configuration files.
